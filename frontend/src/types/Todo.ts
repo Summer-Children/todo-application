@@ -1,5 +1,5 @@
 export interface Todo {
-  id?: string;
+  _id?: string;
   title: string;
   type: 'weekly' | 'daily' | 'spot';
   date?: Date| null; 
