@@ -30,6 +30,7 @@ export class TodoService {
     }
   }
 
+  //type についてのデータも検索条件対象に入れておくとシンプル。
   async findAllForDate(date: Date): Promise<Todo[]> {
     try {
       return await this.todoModel.find({ date }).exec();
@@ -74,6 +75,15 @@ export class TodoService {
     } catch (error) {
       console.error('Error deleting todo:', error.message);
       throw new Error('Failed to delete todo');
+    }
+  }
+
+  async deleteAllForDate(date: Date): Promise<void> {
+    try {
+      await this.todoModel.deleteMany({ date }).exec();
+    } catch (error) {
+      console.error('Error deleting all todos for the date:', error.message);
+      throw new Error('Failed to delete todos for the specified date');
     }
   }
 }

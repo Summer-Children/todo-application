@@ -50,4 +50,10 @@ export class TodoController {
   async delete(@Param('id') id: string) {
     return this.todoService.delete(id);
   }
+
+  @Delete('date/:date')
+  async deleteAll(@Param('date') date: string) {
+    const dateObj = new Date(date);
+    return this.todoService.deleteAllForDate(dateObj);
+  }
 }
