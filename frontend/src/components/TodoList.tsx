@@ -24,13 +24,14 @@ interface TodoListProps {
   handleDayChange: (value: string) => void;
   updateTodoItem: (id: string, updatedFields: Partial<Todo>) => void;
   deleteTodoItem: (id: string) => void;
-}
+  deleteAllTodoItem:()=>void}
 
 export const TodoList: React.FC<TodoListProps> = ({
   todos,
   selectedDate,
   updateTodoItem,
   deleteTodoItem,
+  deleteAllTodoItem
 }) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null);
@@ -79,11 +80,19 @@ export const TodoList: React.FC<TodoListProps> = ({
     }
   };
 
+//  検索追加中
+  const handleOnClick = ()=>{
+    deleteAllTodoItem()
+  }
+
   return (
     <div>
       <h2 className="text-2xl mg:text-3xl font-semibold py-2">
         Todos for {selectedDate?.toDateString()}
       </h2>
+
+      <button onClick={handleOnClick} >Delete All</button>
+      
       {todos.length > 0 ? (
         <ul className="list-disc pl-5">
           {todos.map((todo) => (

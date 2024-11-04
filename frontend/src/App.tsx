@@ -6,6 +6,7 @@ import {
   fetchTodosDaily,
   updateTodo,
   deleteTodo,
+  deleteAllTodo,
 } from "./api/api";
 import {
   TypePicker,
@@ -63,7 +64,7 @@ export const App: React.FC = () => {
         title,
         type as "weekly" | "daily" | "spot",
         // pass the date as a string format
-        date, 
+        date,
         day,
         time
       );
@@ -152,17 +153,16 @@ export const App: React.FC = () => {
 
       if (editedFields.type === "weekly") {
         updatedFields.day = editedFields.day;
-        updatedFields.date = null; 
+        updatedFields.date = null;
       } else if (editedFields.type === "daily") {
         updatedFields.date = editedFields.date;
-        updatedFields.day = null; 
+        updatedFields.day = null;
 
         // spotからspot以外に変更した際、1つのtodoが重複表示されるのを防ぐため
         updatedFields.date = null;
-
       } else if (editedFields.type === "spot") {
         updatedFields.date = editedFields.date;
-        updatedFields.day = null; 
+        updatedFields.day = null;
       }
 
       await updateTodo(id, updatedFields);
@@ -186,6 +186,15 @@ export const App: React.FC = () => {
       }
     } catch (error) {
       console.error("Error deleting todo:", error);
+    }
+  };
+
+  const deleteAllTodoItem = async () => {
+    let formattedDate;
+
+    if (selectedDate) {
+      formattedDate = new Date(selectedDate).toISOString().split("T")[0];
+      await deleteAllTodo(formattedDate);
     }
   };
 
@@ -229,6 +238,7 @@ export const App: React.FC = () => {
           handleDayChange={handleDayChange}
           updateTodoItem={updateTodoItem}
           deleteTodoItem={deleteTodoItem}
+          deleteAllTodoItem={deleteAllTodoItem}
         />
       </div>
     </div>

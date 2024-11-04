@@ -27,10 +27,10 @@ export const fetchTodosForDate = async (date: string) => {
   return response.data;
 };
 
-export const fetcAllTodos = async () =>{
+export const fetcAllTodos = async () => {
   const response = await api.get(`/todos`);
   return response.data;
-}
+};
 
 export const fetchTodosForDay = async (day: string) => {
   const response = await api.get(`/todos/day/${day}`);
@@ -42,7 +42,10 @@ export const fetchTodosDaily = async () => {
   return response.data;
 };
 
-export const updateTodo = async (id: string, updatedFields: Partial<Todo>) :Promise<Todo> => {
+export const updateTodo = async (
+  id: string,
+  updatedFields: Partial<Todo>
+): Promise<Todo> => {
   const response = await api.patch(`/todos/${id}`, updatedFields);
   return response.data;
 };
@@ -50,4 +53,9 @@ export const updateTodo = async (id: string, updatedFields: Partial<Todo>) :Prom
 export const deleteTodo = async (id: string) => {
   const response = await api.delete(`/todos/${id}`);
   return response.data;
+};
+
+export const deleteAllTodo = async (date: string) => {
+  const response = await api.delete(`/todos/date/${date}`)
+  return response.data
 };
